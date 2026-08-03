@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>La Liberta Garden — Menü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #17130f;
+    --bg-2: #1f1a14;
+    --panel: #241d17;
+    --line: #4a3a2a;
+    --line-soft: #382c22;
+    --cream: #ece1c9;
+    --cream-dim: #b3a488;
+    --gold: #cf9a43;
+    --gold-bright: #e6b45c;
+    --ivy: #6b8354;
+    --ivy-dark: #3f5230;
+    --shadow: rgba(0,0,0,0.5);
+    --display: 'Rye', serif;
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Jost', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(207,154,67,0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color:var(--cream);
+    font-family:var(--serif);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* subtle brick/plaster texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0, transparent 2px),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.015) 0, transparent 2px),
+      radial-gradient(circle at 40% 80%, rgba(0,0,0,0.15) 0, transparent 3px);
+    background-size: 90px 90px, 130px 130px, 70px 70px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:640px; margin:0 auto; position:relative; z-index:1; padding-bottom:80px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    text-align:center;
+    padding:38px 20px 26px;
+    position:relative;
+  }
+  .bulb-wrap{
+    display:flex; flex-direction:column; align-items:center;
+    margin-bottom:6px;
+  }
+  .bulb-cord{ width:2px; height:22px; background:linear-gradient(var(--line), transparent);}
+  .bulb{
+    width:34px; height:40px;
+    position:relative;
+    margin-bottom:4px;
+  }
+  .bulb svg{ width:100%; height:100%; filter: drop-shadow(0 0 14px rgba(230,180,92,0.55)); animation: flicker 5s infinite ease-in-out;}
+  @keyframes flicker{
+    0%,100%{ opacity:1; filter: drop-shadow(0 0 14px rgba(230,180,92,0.55)); }
+    92%{ opacity:1; }
+    93%{ opacity:0.75; filter: drop-shadow(0 0 6px rgba(230,180,92,0.3)); }
+    95%{ opacity:1; filter: drop-shadow(0 0 14px rgba(230,180,92,0.55)); }
+  }
+
+  .logo-img{
+    width:172px; height:172px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--line);
+    box-shadow: 0 0 0 6px var(--bg-2), 0 10px 30px var(--shadow), 0 0 40px rgba(207,154,67,0.12);
+    margin-top:6px;
+  }
+
+  .tagline{
+    font-family:var(--sans);
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--gold);
+    margin-top:18px;
+  }
+  .subtitle{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--cream-dim);
+    font-size:15px;
+    margin-top:6px;
+  }
+
+  /* ---------- LANG TOGGLE ---------- */
+  .lang-toggle{
+    position:fixed; top:16px; right:16px; z-index:50;
+    display:flex; background:var(--panel); border:1px solid var(--line);
+    border-radius:999px; padding:3px; box-shadow:0 6px 20px var(--shadow);
+  }
+  .lang-toggle button{
+    font-family:var(--sans); font-size:12px; letter-spacing:0.05em;
+    padding:6px 13px; border-radius:999px; border:none; background:transparent;
+    color:var(--cream-dim); cursor:pointer; transition:.25s;
+  }
+  .lang-toggle button.active{ background:var(--gold); color:#1a140d; font-weight:600;}
+
+  /* ---------- CATEGORY NAV ---------- */
+  .catnav{
+    position:sticky; top:0; z-index:40;
+    display:flex; gap:8px; overflow-x:auto;
+    padding:12px 16px; margin:10px 0 6px;
+    background:linear-gradient(180deg, var(--bg) 60%, rgba(23,19,15,0.85));
+    backdrop-filter:blur(6px);
+    -ms-overflow-style:none; scrollbar-width:none;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .catnav::-webkit-scrollbar{display:none;}
+  .catnav a{
+    flex:0 0 auto;
+    font-family:var(--sans); font-size:13.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--cream-dim); text-decoration:none;
+    padding:7px 14px; border:1px solid var(--line); border-radius:999px;
+    white-space:nowrap; transition:.25s;
+  }
+  .catnav a:hover, .catnav a.active{ color:#1a140d; background:var(--gold); border-color:var(--gold);}
+
+  /* ---------- DIVIDER ---------- */
+  .ivy-divider{ display:flex; align-items:center; justify-content:center; gap:10px; margin:8px 0 18px; opacity:0.8;}
+  .ivy-divider svg{ width:110px; height:14px;}
+  .ivy-divider .diamond{ width:6px; height:6px; background:var(--gold); transform:rotate(45deg); flex:0 0 auto;}
+
+  /* ---------- SECTIONS ---------- */
+  section.category{ padding:22px 20px 6px; scroll-margin-top:70px; position:relative; overflow:hidden;}
+  .cat-bg-icon{
+    position:absolute; top:-10px; right:-18px; width:170px; height:170px;
+    opacity:0.09; pointer-events:none; z-index:0; transform:rotate(-4deg);
+  }
+  .cat-bg-icon svg{ width:100%; height:100%; display:block; stroke:var(--cream); fill:none;}
+  section.category > .cat-head, section.category > .ivy-divider, section.category > .item,
+  section.category > .add-item-btn{ position:relative; z-index:1;}
+  .cat-head{ text-align:center; margin-bottom:4px;}
+  .cat-head h2{
+    font-family:var(--display); font-weight:400;
+    font-size:34px; letter-spacing:0.03em;
+    color:var(--cream);
+    text-shadow:0 2px 10px rgba(0,0,0,0.4);
+  }
+  .cat-head p{ font-family:var(--sans); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-top:2px;}
+
+  .item{
+    display:flex; align-items:baseline; gap:8px;
+    padding:13px 2px;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  .item:last-child{ border-bottom:none;}
+  .item-name{ font-size:21.5px; font-weight:600; color:var(--cream); line-height:1.25;}
+  .item-desc{ font-family:var(--sans); font-size:14px; color:var(--cream-dim); margin-top:3px; line-height:1.5; font-style:normal;}
+  .item-lead{ flex:1; border-bottom:1px dotted var(--line); transform:translateY(-6px); min-width:14px;}
+  .item-heading{
+    font-family:var(--sans); font-size:13px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold); margin:16px 0 4px; padding-top:8px; border-top:1px solid var(--line-soft);
+  }
+  .item-heading:first-child{ border-top:none; margin-top:2px; padding-top:0;}
+  .cat-note{
+    font-family:var(--sans); font-size:11.5px; font-style:italic; color:var(--cream-dim);
+    text-align:center; margin-top:10px; opacity:0.75;
+  }
+  .item-price{ font-family:var(--sans); font-size:18px; color:var(--gold-bright); font-weight:600; white-space:nowrap;}
+  .item-main{ flex:1; min-width:0;}
+  .item-row-top{ display:flex; align-items:baseline; gap:8px;}
+
+  .tag{
+    display:inline-block; font-family:var(--sans); font-size:9.5px; letter-spacing:0.04em;
+    color:var(--ivy); border:1px solid var(--ivy-dark); border-radius:5px;
+    padding:1px 5px; margin-left:6px; vertical-align:middle; text-transform:uppercase;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center; padding:40px 20px 20px; color:var(--cream-dim);
+    font-family:var(--sans); font-size:12px; letter-spacing:0.04em;
+  }
+  footer .fname{ font-family:var(--display); font-size:22px; color:var(--gold); letter-spacing:0.02em; margin-bottom:8px;}
+  footer .addr{ margin-top:6px; opacity:0.8;}
+
+  /* ---------- EDIT MODE ---------- */
+  .gear-btn{
+    position:fixed; bottom:18px; right:18px; z-index:60;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--panel); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 8px 24px var(--shadow);
+    color:var(--gold-bright); font-size:18px;
+    opacity:0.55; transition:.25s;
+  }
+  .gear-btn:hover{ opacity:1; transform:rotate(20deg);}
+
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(10,8,6,0.72);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-backdrop.show{ display:flex;}
+  .modal{
+    background:var(--bg-2); border:1px solid var(--line); border-radius:14px;
+    max-width:420px; width:100%; padding:24px; box-shadow:0 20px 60px var(--shadow);
+  }
+  .modal h3{ font-family:var(--display); font-size:22px; color:var(--gold); margin-bottom:14px; font-weight:400;}
+  .modal input[type=password], .modal input[type=text]{
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--line);
+    background:var(--panel); color:var(--cream); font-family:var(--sans); font-size:14px; margin-bottom:12px;
+  }
+  .modal-btns{ display:flex; gap:10px; justify-content:flex-end;}
+  .btn{
+    font-family:var(--sans); font-size:13px; padding:9px 16px; border-radius:8px; border:1px solid var(--line);
+    background:transparent; color:var(--cream-dim); cursor:pointer;
+  }
+  .btn.primary{ background:var(--gold); color:#1a140d; border-color:var(--gold); font-weight:600;}
+  .btn.danger{ color:#d97757; border-color:#5a3a2c;}
+
+  /* edit mode active state */
+  body.editing .item-name, body.editing .item-desc, body.editing .item-price, body.editing .cat-head h2{
+    outline:1px dashed rgba(207,154,67,0.5); outline-offset:3px; cursor:text; border-radius:3px;
+  }
+  body.editing .item-name:focus, body.editing .item-desc:focus, body.editing .item-price:focus, body.editing .cat-head h2:focus{
+    outline:1px solid var(--gold-bright); background:rgba(207,154,67,0.06);
+  }
+  .edit-bar{
+    position:fixed; bottom:0; left:0; right:0; z-index:70;
+    background:var(--panel); border-top:1px solid var(--line);
+    padding:12px 16px; display:none; align-items:center; justify-content:center; gap:10px;
+    box-shadow:0 -8px 24px var(--shadow);
+  }
+  body.editing .edit-bar{ display:flex;}
+  .item-del{
+    display:none; font-family:var(--sans); font-size:11px; color:#d97757; cursor:pointer; margin-left:8px; white-space:nowrap;
+  }
+  body.editing .item-del{ display:inline-block;}
+  .add-item-btn, .add-cat-btn{
+    display:none; font-family:var(--sans); font-size:12px; color:var(--ivy); border:1px dashed var(--ivy-dark);
+    border-radius:8px; padding:8px; text-align:center; cursor:pointer; margin-top:8px;
+  }
+  body.editing .add-item-btn, body.editing .add-cat-btn{ display:block;}
+
+  .loading-note{ text-align:center; font-family:var(--sans); font-size:11px; color:var(--cream-dim); padding:6px; opacity:0.6;}
+
+  @media (max-width:420px){
+    .logo-img{ width:140px; height:140px;}
+    .cat-head h2{ font-size:29px;}
+    .item-name{ font-size:19px;}
+    .cat-bg-icon{ width:120px; height:120px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button id="btn-tr" class="active">TR</button>
+  <button id="btn-en">EN</button>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="bulb-wrap">
+      <div class="bulb-cord"></div>
+      <div class="bulb">
+        <svg viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="12" cy="11" rx="9" ry="10" fill="#e6b45c" opacity="0.9"/>
+          <rect x="9" y="19" width="6" height="6" rx="1.5" fill="#4a3a2a"/>
+        </svg>
+      </div>
+    </div>
+    <img class="logo-img" src="data:image/webp;base64,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" alt="La Liberta Garden Bar logo">
+    <div class="tagline">Drink &amp; Eat</div>
+  </div>
+
+  <nav class="catnav" id="catnav"></nav>
+
+  <main id="menu-content"></main>
+
+  <footer>
+    <div class="fname">La Liberta Garden</div>
+    <div class="addr" data-tr="Afiyet olsun 🌿" data-en="Enjoy your visit 🌿">Afiyet olsun 🌿</div>
+  </footer>
+</div>
+
+<div class="gear-btn" id="gearBtn" title="Menüyü düzenle">&#9881;</div>
+
+<div class="modal-backdrop" id="pwModal">
+  <div class="modal">
+    <h3>Menüyü Düzenle</h3>
+    <input type="password" id="pwInput" placeholder="Şifre">
+    <div class="modal-btns">
+      <button class="btn" id="pwCancel">Vazgeç</button>
+      <button class="btn primary" id="pwOk">Giriş yap</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-bar">
+  <button class="btn" id="addCatBtn">+ Yeni Kategori</button>
+  <button class="btn primary" id="saveBtn">Kaydet</button>
+  <button class="btn" id="exitEditBtn">Düzenlemeyi bitir</button>
+</div>
+
+<script>
+// Varsayılan / örnek menü — sen düzenledikçe bu içerik değişir ve kaydedilir.
+window.DEFAULT_MENU = {
+  "categories": [
+    {
+      "id": "kampanyalar",
+      "icon": "promo",
+      "name_tr": "Kampanyalar",
+      "name_en": "Special Offers",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "isHeading": true,
+          "name_tr": "Kovalar",
+          "name_en": "Buckets"
+        },
+        {
+          "name_tr": "6'lı Tuborg Kova",
+          "name_en": "Tuborg Bucket (6 pcs)",
+          "desc_tr": "Turşu ve fıstık ile",
+          "desc_en": "Served with pickles and peanuts",
+          "price": "1050",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "6'lı Carlsberg Kova",
+          "name_en": "Carlsberg Bucket (6 pcs)",
+          "desc_tr": "Turşu ve fıstık ile",
+          "desc_en": "Served with pickles and peanuts",
+          "price": "1100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Shotlar",
+          "name_en": "Shots"
+        },
+        {
+          "name_tr": "5'li Tekila Shot",
+          "name_en": "Tequila Shot x5",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "750",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "5'li Jagermeister Shot",
+          "name_en": "Jägermeister Shot x5",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "900",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Tekila Shot",
+          "name_en": "Tuborg + Tequila Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Yiyecekler",
+          "name_en": "Food Combos"
+        },
+        {
+          "name_tr": "Tuborg + Tavuk Şiş",
+          "name_en": "Tuborg + Chicken Shish",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Çıtır Tavuk",
+          "name_en": "Tuborg + Crispy Chicken",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Hamburger",
+          "name_en": "Tuborg + Hamburger",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kadeh Şarap + Makarna",
+          "name_en": "Glass of Wine + Pasta",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "İçecekler",
+          "name_en": "Drinks"
+        },
+        {
+          "name_tr": "Jim Beam Duble",
+          "name_en": "Jim Beam Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Şişeler",
+          "name_en": "Bottles"
+        },
+        {
+          "name_tr": "Yeni Rakı 20cl",
+          "name_en": "Yeni Rakı 20cl",
+          "desc_tr": "Yanında istediğiniz 2 soğuk meze ile",
+          "desc_en": "Served with 2 cold mezes of your choice",
+          "price": "1100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "1967 Vodka 50cl",
+          "name_en": "1967 Vodka 50cl",
+          "desc_tr": "Litrelik içecek + Elma Söğüş + Fıstık ile",
+          "desc_en": "With 1L mixer + apple platter + peanuts",
+          "price": "1700",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels Ballı 70cl",
+          "name_en": "Jack Daniels Honey 70cl",
+          "desc_tr": "1L Enerji + Meyve Tabağı + Fıstık ile",
+          "desc_en": "With 1L energy drink + fruit platter + peanuts",
+          "price": "3000",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "biralar",
+      "icon": "beer",
+      "name_tr": "Biralar",
+      "name_en": "Beers",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Tuborg Gold Kutu 50cl",
+          "name_en": "Tuborg Gold Can 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg Gold Şişe 50cl",
+          "name_en": "Tuborg Gold Bottle 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg Kırmızı 50cl",
+          "name_en": "Tuborg Red 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "280",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Frederik Yakıma IPA",
+          "name_en": "Frederik Yakıma IPA",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "220",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Carlsberg Kutu 50cl",
+          "name_en": "Carlsberg Can 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Carlsberg Şişe 50cl",
+          "name_en": "Carlsberg Bottle 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Carlsberg Luna 50cl",
+          "name_en": "Carlsberg Luna 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Carlsberg Elephant 50cl",
+          "name_en": "Carlsberg Elephant 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg Ice 33cl",
+          "name_en": "Tuborg Ice 33cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg Ice 50cl",
+          "name_en": "Tuborg Ice 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "190",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg Smooth 33cl",
+          "name_en": "Tuborg Smooth 33cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Heineken 33cl",
+          "name_en": "Heineken 33cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Blanc 50cl",
+          "name_en": "Blanc 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "190",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Blanc 33cl",
+          "name_en": "Blanc 33cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "160",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Kampanyalı Biralar",
+          "name_en": "Beer Combos"
+        },
+        {
+          "name_tr": "Tuborg + Tekila Shot",
+          "name_en": "Tuborg + Tequila Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Tavuk Şiş",
+          "name_en": "Tuborg + Chicken Shish",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Hamburger",
+          "name_en": "Tuborg + Hamburger",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tuborg + Çıtır Tavuk",
+          "name_en": "Tuborg + Crispy Chicken",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "kokteyller",
+      "icon": "cocktail",
+      "name_tr": "Kokteyller",
+      "name_en": "Cocktails",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Cosmopolitan",
+          "name_en": "Cosmopolitan",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cin Fizz",
+          "name_en": "Gin Fizz",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sex on the Beach",
+          "name_en": "Sex on the Beach",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "320",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Hönönö",
+          "name_en": "Hönönö",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cuba Libre",
+          "name_en": "Cuba Libre",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Elsa",
+          "name_en": "Elsa",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Greenade",
+          "name_en": "Greenade",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "330",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jagerbomb",
+          "name_en": "Jägerbomb",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jhonny",
+          "name_en": "Jhonny",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "320",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Joker",
+          "name_en": "Joker",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "340",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Adios",
+          "name_en": "Adios",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "340",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Lynchburg Lemonade",
+          "name_en": "Lynchburg Lemonade",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Margarita",
+          "name_en": "Margarita",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mary Jane",
+          "name_en": "Mary Jane",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mia",
+          "name_en": "Mia",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mjolnir",
+          "name_en": "Mjölnir",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Quenn",
+          "name_en": "Quenn",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sweet Dreams",
+          "name_en": "Sweet Dreams",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tequila Sunrise",
+          "name_en": "Tequila Sunrise",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Long Island",
+          "name_en": "Long Island",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cin Kuzukulağı",
+          "name_en": "Gin & Sorrel",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Alkolsüz Kokteyl",
+          "name_en": "Non-Alcoholic Cocktail",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "sise-alkoller",
+      "icon": "spirit",
+      "name_tr": "Şişe Alkoller",
+      "name_en": "Bottled Spirits",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "isHeading": true,
+          "name_tr": "Votkalar",
+          "name_en": "Vodkas"
+        },
+        {
+          "name_tr": "1967 Vodka 35cl",
+          "name_en": "1967 Vodka 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "1967 Vodka 50cl",
+          "name_en": "1967 Vodka 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1700",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "1967 Vodka 70cl",
+          "name_en": "1967 Vodka 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2000",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "İstanblue 35cl",
+          "name_en": "İstanblue 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "İstanblue 50cl",
+          "name_en": "İstanblue 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1700",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "İstanblue 70cl",
+          "name_en": "İstanblue 70cl",
+          "desc_tr": "Fiyat için personele danışın",
+          "desc_en": "Ask staff for price",
+          "price": "",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Smirnoff 35cl",
+          "name_en": "Smirnoff 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1700",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Smirnoff 50cl",
+          "name_en": "Smirnoff 50cl",
+          "desc_tr": "Fiyat için personele danışın",
+          "desc_en": "Ask staff for price",
+          "price": "",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Rakı",
+          "name_en": "Raki"
+        },
+        {
+          "name_tr": "Beylerbeyi 35cl",
+          "name_en": "Beylerbeyi 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1700",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Beylerbeyi 50cl",
+          "name_en": "Beylerbeyi 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2500",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Beylerbeyi 70cl",
+          "name_en": "Beylerbeyi 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeni Rakı 35cl",
+          "name_en": "Yeni Rakı 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1500",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeni Rakı 50cl",
+          "name_en": "Yeni Rakı 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeni Rakı 70cl",
+          "name_en": "Yeni Rakı 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2800",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeni Rakı 100cl",
+          "name_en": "Yeni Rakı 100cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3900",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Viskiler",
+          "name_en": "Whiskies"
+        },
+        {
+          "name_tr": "Jack Daniels 35cl",
+          "name_en": "Jack Daniels 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels 50cl",
+          "name_en": "Jack Daniels 50cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3000",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels 70cl",
+          "name_en": "Jack Daniels 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "4100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels 100cl",
+          "name_en": "Jack Daniels 100cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "5500",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Gentlemen Jack 35cl",
+          "name_en": "Gentlemen Jack 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2600",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Gentlemen Jack 70cl",
+          "name_en": "Gentlemen Jack 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "4800",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels Ballı 70cl",
+          "name_en": "Jack Daniels Honey 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3000",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Dimple 70cl",
+          "name_en": "Dimple 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3000",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Black Label 70cl",
+          "name_en": "Black Label 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3500",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Woodford 70cl",
+          "name_en": "Woodford 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "5500",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Diğer",
+          "name_en": "Other"
+        },
+        {
+          "name_tr": "Jagermeister 35cl",
+          "name_en": "Jägermeister 35cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "2250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Gordon's Gin 100cl",
+          "name_en": "Gordon's Gin 100cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "3800",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Buzbağ Şarap 70cl",
+          "name_en": "Buzbağ Wine 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Rose Şarap 70cl",
+          "name_en": "Rosé Wine 70cl",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "1250",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "kadeh-alkoller",
+      "icon": "rocks",
+      "name_tr": "Kadeh Alkoller",
+      "name_en": "Drinks by the Glass",
+      "note_tr": "Üst katta rakı servisimiz yoktur.",
+      "note_en": "No raki service on the upper floor.",
+      "items": [
+        {
+          "isHeading": true,
+          "name_tr": "Votkalar",
+          "name_en": "Vodkas"
+        },
+        {
+          "name_tr": "Vodka Tek",
+          "name_en": "Vodka Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Vodka Vişne Tek",
+          "name_en": "Vodka Sour Cherry Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Vodka Vişne Duble",
+          "name_en": "Vodka Sour Cherry Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "390",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Vodka Duble",
+          "name_en": "Vodka Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Vodka Enerji Tek",
+          "name_en": "Vodka Energy Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Vodka Enerji Duble",
+          "name_en": "Vodka Energy Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "390",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Rakı",
+          "name_en": "Raki"
+        },
+        {
+          "name_tr": "Yeni Rakı Tek",
+          "name_en": "Yeni Rakı Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "290",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Meyhane Teki (6cl)",
+          "name_en": "Meyhane Single (6cl)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "350",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeni Rakı Duble",
+          "name_en": "Yeni Rakı Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "390",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Cin",
+          "name_en": "Gin"
+        },
+        {
+          "name_tr": "Cin Tek",
+          "name_en": "Gin Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cin Duble",
+          "name_en": "Gin Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cin Salatalık Duble",
+          "name_en": "Gin & Cucumber Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "390",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Viskiler",
+          "name_en": "Whiskies"
+        },
+        {
+          "name_tr": "Jack Daniels Tek",
+          "name_en": "Jack Daniels Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jack Daniels Duble",
+          "name_en": "Jack Daniels Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "450",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jim Beam Tek",
+          "name_en": "Jim Beam Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jim Beam Duble",
+          "name_en": "Jim Beam Double",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Baileys Tek",
+          "name_en": "Baileys Single",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Şaraplar",
+          "name_en": "Wines"
+        },
+        {
+          "name_tr": "Kırmızı Şarap Kadeh",
+          "name_en": "Red Wine Glass",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Beyaz Şarap Kadeh",
+          "name_en": "White Wine Glass",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Rose Şarap Kadeh",
+          "name_en": "Rosé Wine Glass",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "400",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "shotlar",
+      "icon": "shot",
+      "name_tr": "Shotlar",
+      "name_en": "Shots",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Jagermeister Shot",
+          "name_en": "Jägermeister Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tekila Shot",
+          "name_en": "Tequila Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Olmeca Shot",
+          "name_en": "Olmeca Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "220",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Fındık Vodka",
+          "name_en": "Hazelnut Vodka",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Viski Shot",
+          "name_en": "Whisky Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "280",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Limon Shot",
+          "name_en": "Lemon Shot",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "5",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sıkma Limon",
+          "name_en": "Squeezed Lemon",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "10",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "5'li Shotlar",
+          "name_en": "Sets of 5"
+        },
+        {
+          "name_tr": "5'li Tekila Shot",
+          "name_en": "Tequila Shot x5",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "750",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "5'li Jagermeister Shot",
+          "name_en": "Jägermeister Shot x5",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "900",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "5'li Fındık Votka",
+          "name_en": "Hazelnut Vodka x5",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "900",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "tavuk-yemekleri",
+      "icon": "chicken",
+      "name_tr": "Tavuk Yemekleri",
+      "name_en": "Chicken Dishes",
+      "note_tr": "Fiyatlar tek porsiyon içindir; 1+1 seçeneği de mevcuttur.",
+      "note_en": "Prices shown are for a single portion; a 1+1 (shared) option is also available.",
+      "items": [
+        {
+          "name_tr": "BBQ Soslu Tavuk",
+          "name_en": "BBQ Sauce Chicken",
+          "desc_tr": "1+1 seçeneği: ₺420",
+          "desc_en": "1+1 option: 420 ₺",
+          "price": "240",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Chicky Milano",
+          "name_en": "Chicky Milano",
+          "desc_tr": "1+1 seçeneği: ₺520",
+          "desc_en": "1+1 option: 520 ₺",
+          "price": "280",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "İstiridye Soslu Tavuk",
+          "name_en": "Oyster Sauce Chicken",
+          "desc_tr": "1+1 seçeneği: ₺480",
+          "desc_en": "1+1 option: 480 ₺",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Köri Soslu Tavuk",
+          "name_en": "Curry Sauce Chicken",
+          "desc_tr": "1+1 seçeneği: ₺420",
+          "desc_en": "1+1 option: 420 ₺",
+          "price": "240",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kremalı Mantarlı Tavuk",
+          "name_en": "Creamy Mushroom Chicken",
+          "desc_tr": "1+1 seçeneği: ₺480",
+          "desc_en": "1+1 option: 480 ₺",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mexican Tavuk",
+          "name_en": "Mexican Chicken",
+          "desc_tr": "1+1 seçeneği: ₺480",
+          "desc_en": "1+1 option: 480 ₺",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sweet Chili Soslu Tavuk",
+          "name_en": "Sweet Chili Sauce Chicken",
+          "desc_tr": "1+1 seçeneği: ₺480",
+          "desc_en": "1+1 option: 480 ₺",
+          "price": "260",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Külbastı",
+          "name_en": "Grilled Chicken Cutlet",
+          "desc_tr": "1+1 seçeneği: ₺600",
+          "desc_en": "1+1 option: 600 ₺",
+          "price": "320",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tavuk Izgara",
+          "name_en": "Grilled Chicken",
+          "desc_tr": "1+1 seçeneği: ₺600",
+          "desc_en": "1+1 option: 600 ₺",
+          "price": "320",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tavuk Kavurma",
+          "name_en": "Sauteed Chicken",
+          "desc_tr": "1+1 seçeneği: ₺540",
+          "desc_en": "1+1 option: 540 ₺",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tavuk Sote",
+          "name_en": "Chicken Sote",
+          "desc_tr": "1+1 seçeneği: ₺540",
+          "desc_en": "1+1 option: 540 ₺",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tavuk Şiş",
+          "name_en": "Chicken Shish",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "et-yemekleri",
+      "icon": "meat",
+      "name_tr": "Et Yemekleri",
+      "name_en": "Meat Dishes",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Çoban Kavurma",
+          "name_en": "Shepherd's Sauté",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "680",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Dana Biftek",
+          "name_en": "Beef Steak",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "730",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Dana Ciğeri",
+          "name_en": "Beef Liver",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "380",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Dana Madalyon",
+          "name_en": "Beef Medallion",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "730",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Et Sote",
+          "name_en": "Meat Sote",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "580",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kremalı Mantarlı Bonfile",
+          "name_en": "Creamy Mushroom Fillet",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "780",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kurban Kavurma",
+          "name_en": "Kurban Sauté",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "730",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Orli Biftek",
+          "name_en": "Orly Steak",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "730",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Izgara Köfte",
+          "name_en": "Grilled Meatballs",
+          "desc_tr": "1+1 seçeneği: ₺550",
+          "desc_en": "1+1 option: 550 ₺",
+          "price": "290",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "makarna-salatalar",
+      "icon": "pasta",
+      "name_tr": "Makarna ve Salatalar",
+      "name_en": "Pasta & Salads",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "isHeading": true,
+          "name_tr": "Makarnalar",
+          "name_en": "Pasta"
+        },
+        {
+          "name_tr": "İstiridye Soslu Makarna",
+          "name_en": "Oyster Sauce Pasta",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kremalı Mantarlı Tavuklu",
+          "name_en": "Creamy Mushroom & Chicken Pasta",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Penne Arabiata",
+          "name_en": "Penne Arrabiata",
+          "desc_tr": "1+1 seçeneği: ₺260",
+          "desc_en": "1+1 option: 260 ₺",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Spagetti Bolonez",
+          "name_en": "Spaghetti Bolognese",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Spagetti Napoliten",
+          "name_en": "Spaghetti Napolitan",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Tavuklu Makarna",
+          "name_en": "Chicken Pasta",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "isHeading": true,
+          "name_tr": "Salatalar",
+          "name_en": "Salads"
+        },
+        {
+          "name_tr": "Çoban Salata",
+          "name_en": "Shepherd's Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "240",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Gavur Dağı",
+          "name_en": "Gavurdağı Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mevsim Salata",
+          "name_en": "Seasonal Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "240",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Roka Salata",
+          "name_en": "Arugula Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sezar Salata",
+          "name_en": "Caesar Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "280",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Ton Balıklı Salata",
+          "name_en": "Tuna Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "aperatifler",
+      "icon": "fries",
+      "name_tr": "Aperatifler",
+      "name_en": "Appetizers",
+      "note_tr": "Fiyatlar tek porsiyon içindir; 1+1 seçeneği de mevcuttur.",
+      "note_en": "Prices shown are for a single portion; a 1+1 (shared) option is also available.",
+      "items": [
+        {
+          "name_tr": "Bazlama Tost Karışık",
+          "name_en": "Mixed Bazlama Toast",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Bazlama Tost Kaşarlı",
+          "name_en": "Cheese Bazlama Toast",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Bazlama Tost Peynirli",
+          "name_en": "White Cheese Bazlama Toast",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Bazlama Tost Sucuklu",
+          "name_en": "Sausage Bazlama Toast",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Karışık Tost",
+          "name_en": "Mixed Toast",
+          "desc_tr": "1+1 seçeneği: ₺260",
+          "desc_en": "1+1 option: 260 ₺",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kaşarlı Tost",
+          "name_en": "Cheese Toast",
+          "desc_tr": "1+1 seçeneği: ₺220",
+          "desc_en": "1+1 option: 220 ₺",
+          "price": "130",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Peynirli Tost",
+          "name_en": "White Cheese Toast",
+          "desc_tr": "1+1 seçeneği: ₺220",
+          "desc_en": "1+1 option: 220 ₺",
+          "price": "130",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sucuklu Tost",
+          "name_en": "Sausage Toast",
+          "desc_tr": "1+1 seçeneği: ₺220",
+          "desc_en": "1+1 option: 220 ₺",
+          "price": "130",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Çıtır Tavuk",
+          "name_en": "Crispy Chicken",
+          "desc_tr": "1+1 seçeneği: ₺440",
+          "desc_en": "1+1 option: 440 ₺",
+          "price": "240",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Hamburger",
+          "name_en": "Hamburger",
+          "desc_tr": "1+1 seçeneği: ₺460",
+          "desc_en": "1+1 option: 460 ₺",
+          "price": "250",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Elma Dilim Patates",
+          "name_en": "Apple Slice Fries",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "160",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Parmak Patates",
+          "name_en": "Finger Fries",
+          "desc_tr": "1+1 seçeneği: ₺320",
+          "desc_en": "1+1 option: 320 ₺",
+          "price": "160",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Nugget Tabağı",
+          "name_en": "Chicken Nuggets",
+          "desc_tr": "1+1 seçeneği: ₺360",
+          "desc_en": "1+1 option: 360 ₺",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sigara Böreği",
+          "name_en": "Cigar Böreği",
+          "desc_tr": "1+1 seçeneği: ₺360",
+          "desc_en": "1+1 option: 360 ₺",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Soslu Sigara Böreği",
+          "name_en": "Cigar Böreği with Sauce",
+          "desc_tr": "1+1 seçeneği: ₺420",
+          "desc_en": "1+1 option: 420 ₺",
+          "price": "230",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Soğan Halkası",
+          "name_en": "Onion Rings",
+          "desc_tr": "1+1 seçeneği: ₺300",
+          "desc_en": "1+1 option: 300 ₺",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sosis Tabağı",
+          "name_en": "Sausage Plate",
+          "desc_tr": "1+1 seçeneği: ₺360",
+          "desc_en": "1+1 option: 360 ₺",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Bira Tabağı",
+          "name_en": "Beer Snack Plate",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "230",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Orta Boy Patates",
+          "name_en": "Medium Fries",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "mezeler",
+      "icon": "meze",
+      "name_tr": "Mezeler",
+      "name_en": "Mezes",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Meyve Tabağı",
+          "name_en": "Fruit Platter",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "330",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Yeşil Zeytin",
+          "name_en": "Green Olives",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Turşu",
+          "name_en": "Pickles",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Acılı Ezme",
+          "name_en": "Spicy Tomato Ezme",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cacık",
+          "name_en": "Cacık (Yogurt & Cucumber)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Dilim Peynir",
+          "name_en": "Sliced Cheese",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "140",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Elma Söğüş",
+          "name_en": "Sliced Apple",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Eski Kaşar",
+          "name_en": "Aged Kaşar Cheese",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "290",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Haydari",
+          "name_en": "Haydari",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kaşar Peyniri",
+          "name_en": "Kaşar Cheese",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "220",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kaşarlı Mantar",
+          "name_en": "Mushroom with Cheese",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "150",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Kornişon Havuç Salata",
+          "name_en": "Gherkin & Carrot Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Köz Biber",
+          "name_en": "Roasted Pepper",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Köz Patlıcan",
+          "name_en": "Roasted Eggplant",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "220",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Mevsim Kızartma",
+          "name_en": "Seasonal Fried Vegetables",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "320",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Pilaki",
+          "name_en": "Pilaki (Bean Salad)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Rus Salatası",
+          "name_en": "Russian Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "200",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Salata Söğüş",
+          "name_en": "Sliced Vegetable Salad",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "140",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Süzme Yoğurt",
+          "name_en": "Strained Yogurt",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "170",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "cerezler",
+      "icon": "nuts",
+      "name_tr": "Çerezler",
+      "name_en": "Nuts & Snacks",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Tuzlu Fıstık",
+          "name_en": "Salted Peanuts",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Sarı Leblebi",
+          "name_en": "Roasted Chickpeas",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Antep Fıstığı",
+          "name_en": "Pistachios",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "300",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Badem",
+          "name_en": "Almonds",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "225",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Fındık",
+          "name_en": "Hazelnuts",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "225",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Karışık Çerez",
+          "name_en": "Mixed Nuts",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "275",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Jelibon",
+          "name_en": "Gummy Candy",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Çikolata",
+          "name_en": "Chocolate",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "100",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    },
+    {
+      "id": "soft-icecekler",
+      "icon": "nonalcoholic",
+      "name_tr": "Soft İçecekler",
+      "name_en": "Soft Drinks",
+      "note_tr": "",
+      "note_en": "",
+      "items": [
+        {
+          "name_tr": "Churchill",
+          "name_en": "Churchill",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Alkolsüz Kokteyl",
+          "name_en": "Non-Alcoholic Cocktail",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "180",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Cola",
+          "name_en": "Cola",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "100",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Enerji (Litrelik)",
+          "name_en": "Energy Drink (1L)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Redbull",
+          "name_en": "Red Bull",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "130",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Soda",
+          "name_en": "Soda",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "60",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Soda Limon",
+          "name_en": "Lemon Soda",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "70",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Su",
+          "name_en": "Water",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "30",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Şalgam (Bardak)",
+          "name_en": "Turnip Juice (Glass)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "90",
+          "tag_tr": "",
+          "tag_en": ""
+        },
+        {
+          "name_tr": "Şalgam (Litrelik)",
+          "name_en": "Turnip Juice (1L)",
+          "desc_tr": "",
+          "desc_en": "",
+          "price": "270",
+          "tag_tr": "",
+          "tag_en": ""
+        }
+      ]
+    }
+  ]
+};
+
+(function(){
+  var STORAGE_KEY = "la-liberta-menu-v1";
+  var EDIT_PASSWORD = "izmirkoykasari35";
+
+  var state = {
+    lang: "tr",
+    editing: false,
+    data: null
+  };
+
+  var els = {
+    catnav: document.getElementById("catnav"),
+    content: document.getElementById("menu-content"),
+    gearBtn: document.getElementById("gearBtn"),
+    pwModal: document.getElementById("pwModal"),
+    pwInput: document.getElementById("pwInput"),
+    pwOk: document.getElementById("pwOk"),
+    pwCancel: document.getElementById("pwCancel"),
+    saveBtn: document.getElementById("saveBtn"),
+    exitEditBtn: document.getElementById("exitEditBtn"),
+    addCatBtn: document.getElementById("addCatBtn"),
+    btnTr: document.getElementById("btn-tr"),
+    btnEn: document.getElementById("btn-en")
+  };
+
+  function cloneDefault(){
+    return JSON.parse(JSON.stringify(window.DEFAULT_MENU));
+  }
+
+  function loadMenu(){
+    if (!window.storage) { state.data = cloneDefault(); render(); return; }
+    window.storage.get(STORAGE_KEY, true).then(function(res){
+      if (res && res.value) {
+        try { state.data = JSON.parse(res.value); }
+        catch(e){ state.data = cloneDefault(); }
+      } else {
+        state.data = cloneDefault();
+      }
+      render();
+    }).catch(function(){
+      state.data = cloneDefault();
+      render();
+    });
+  }
+
+  function saveMenu(cb){
+    if (!window.storage) { if(cb) cb(false); return; }
+    window.storage.set(STORAGE_KEY, JSON.stringify(state.data), true).then(function(res){
+      if (cb) cb(!!res);
+    }).catch(function(){ if(cb) cb(false); });
+  }
+
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function slugify(str){
+    return (str || "cat").toLowerCase()
+      .replace(/[ığüşöç]/g, function(c){ return {'ı':'i','ğ':'g','ü':'u','ş':'s','ö':'o','ç':'c'}[c]; })
+      .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || ("cat-" + Date.now());
+  }
+
+  function render(){
+    if (!state.data) return;
+    document.body.classList.toggle("editing", state.editing);
+    renderNav();
+    renderContent();
+  }
+
+  function renderNav(){
+    els.catnav.innerHTML = "";
+    state.data.categories.forEach(function(cat){
+      var a = el("a", "", state.lang === "tr" ? (cat.name_tr || "—") : (cat.name_en || "—"));
+      a.href = "#cat-" + cat.id;
+      els.catnav.appendChild(a);
+    });
+  }
+
+  var CATEGORY_ICONS = {
+    cocktail: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M20 18 L50 52 L80 18 Z"/>'
+      + '<path d="M14 14 Q50 24 86 14" />'
+      + '<path d="M50 52 L50 84"/>'
+      + '<path d="M34 90 L66 90"/>'
+      + '<circle cx="40" cy="30" r="4"/>'
+      + '<path d="M40 26 L46 16"/>'
+      + '<path d="M62 40 L70 24"/>'
+      + '</svg>',
+    beer: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M28 30 H68 V86 Q68 92 62 92 H34 Q28 92 28 86 Z"/>'
+      + '<path d="M68 40 H82 Q88 40 88 48 V56 Q88 64 82 64 H68"/>'
+      + '<path d="M28 30 Q30 16 46 16 Q60 16 60 26 Q72 22 66 34 Q30 38 28 30 Z"/>'
+      + '<path d="M34 46 V80" opacity="0.6"/>'
+      + '<path d="M44 46 V80" opacity="0.4"/>'
+      + '<path d="M54 46 V80" opacity="0.5"/>'
+      + '</svg>',
+    wine: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M32 14 Q30 42 50 46 Q70 42 68 14 Z"/>'
+      + '<path d="M33 24 Q50 32 67 24" opacity="0.6"/>'
+      + '<path d="M50 46 L50 82"/>'
+      + '<path d="M32 92 H68"/>'
+      + '<path d="M38 92 L50 82 L62 92"/>'
+      + '</svg>',
+    nonalcoholic: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M30 22 H70 L64 88 H36 Z"/>'
+      + '<path d="M30 22 Q50 30 70 22" opacity="0.6"/>'
+      + '<path d="M62 18 L78 4"/>'
+      + '<circle cx="80" cy="60" r="12"/>'
+      + '<path d="M74 60 H86 M80 54 V66"/>'
+      + '</svg>',
+    food: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M16 42 Q16 20 50 20 Q84 20 84 42 Z"/>'
+      + '<path d="M14 42 H86"/>'
+      + '<path d="M18 52 H82" opacity="0.7"/>'
+      + '<path d="M16 62 H84"/>'
+      + '<path d="M20 72 Q20 86 40 86 H60 Q80 86 80 72 Z"/>'
+      + '<circle cx="36" cy="30" r="1.6" fill="var(--cream)"/>'
+      + '<circle cx="50" cy="26" r="1.6" fill="var(--cream)"/>'
+      + '<circle cx="64" cy="30" r="1.6" fill="var(--cream)"/>'
+      + '</svg>',
+    fries: '<svg viewBox="0 0 100 100" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M30 50 H70 L64 92 Q64 96 60 96 H40 Q36 96 36 92 Z" stroke-width="1.6"/>'
+      + '<path d="M28 50 H72" stroke-width="1.6"/>'
+      + '<line x1="38" y1="50" x2="34" y2="14" stroke-width="4.5"/>'
+      + '<line x1="46" y1="50" x2="42" y2="8" stroke-width="4.5"/>'
+      + '<line x1="54" y1="50" x2="58" y2="6" stroke-width="4.5"/>'
+      + '<line x1="62" y1="50" x2="66" y2="12" stroke-width="4.5"/>'
+      + '<line x1="50" y1="50" x2="50" y2="18" stroke-width="4.5"/>'
+      + '</svg>',
+    leaf: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M20 80 Q30 30 80 18 Q68 60 20 80 Z"/>'
+      + '<path d="M22 78 Q45 50 76 22" opacity="0.6"/>'
+      + '</svg>',
+    promo: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M14 50 L50 14 H86 V50 L50 86 Z"/>'
+      + '<circle cx="66" cy="34" r="3"/>'
+      + '<line x1="34" y1="66" x2="66" y2="34"/>'
+      + '<circle cx="34" cy="66" r="3"/>'
+      + '</svg>',
+    spirit: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M42 8 H58 V22 Q68 30 68 42 V88 Q68 94 60 94 H40 Q32 94 32 88 V42 Q32 30 42 22 Z"/>'
+      + '<path d="M42 8 H58"/>'
+      + '<path d="M32 52 H68" opacity="0.5"/>'
+      + '<path d="M36 68 H64" opacity="0.3"/>'
+      + '</svg>',
+    rocks: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M30 20 H70 L63 88 H37 Z"/>'
+      + '<path d="M33 36 H67" opacity="0.5"/>'
+      + '<rect x="42" y="46" width="18" height="18" rx="3" transform="rotate(12 51 55)" opacity="0.8"/>'
+      + '</svg>',
+    shot: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M38 20 H62 L57 82 H43 Z"/>'
+      + '<path d="M36 18 H64"/>'
+      + '<path d="M41 40 H59" opacity="0.5"/>'
+      + '<path d="M70 26 L76 18 M78 32 L86 28" opacity="0.6"/>'
+      + '</svg>',
+    chicken: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M46 16 Q68 12 74 34 Q80 54 60 60 Q68 72 56 84 Q44 94 36 82 Q26 78 30 66 Q18 62 22 46 Q26 28 46 16 Z"/>'
+      + '<circle cx="40" cy="86" r="6"/>'
+      + '</svg>',
+    meat: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M18 14 V44 M12 14 V26 Q12 34 18 34 Q24 34 24 26 V14"/>'
+      + '<path d="M18 44 V90"/>'
+      + '<path d="M60 16 L86 42 L56 72 L54 60 Z"/>'
+      + '<path d="M56 72 L38 90"/>'
+      + '</svg>',
+    pasta: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M48 18 C72 18 74 46 52 48 C34 48 34 30 46 30 C54 30 55 38 48 40"/>'
+      + '<path d="M30 12 V26 M38 12 V26 M22 12 V26" opacity="0.7"/>'
+      + '<path d="M22 26 Q30 32 38 26"/>'
+      + '<path d="M30 48 V88"/>'
+      + '</svg>',
+    meze: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<ellipse cx="50" cy="62" rx="36" ry="15"/>'
+      + '<ellipse cx="50" cy="59" rx="27" ry="10" opacity="0.5"/>'
+      + '<circle cx="38" cy="58" r="3" fill="var(--cream)" opacity="0.8"/>'
+      + '<circle cx="50" cy="55" r="3" fill="var(--cream)" opacity="0.8"/>'
+      + '<circle cx="62" cy="58" r="3" fill="var(--cream)" opacity="0.8"/>'
+      + '</svg>',
+    nuts: '<svg viewBox="0 0 100 100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M18 46 Q18 82 50 82 Q82 82 82 46"/>'
+      + '<path d="M18 46 H82"/>'
+      + '<ellipse cx="34" cy="34" rx="7" ry="9" transform="rotate(-20 34 34)" opacity="0.8"/>'
+      + '<ellipse cx="50" cy="28" rx="7" ry="9" opacity="0.8"/>'
+      + '<ellipse cx="66" cy="34" rx="7" ry="9" transform="rotate(20 66 34)" opacity="0.8"/>'
+      + '</svg>'
+  };
+
+  function getCategoryIcon(cat){
+    if (cat.icon && CATEGORY_ICONS[cat.icon]) return CATEGORY_ICONS[cat.icon];
+    var key = (cat.id + " " + (cat.name_tr||"") + " " + (cat.name_en||"")).toLowerCase();
+    if (/kampanya|promo/.test(key)) return CATEGORY_ICONS.promo;
+    if (/kokteyl|cocktail/.test(key)) return CATEGORY_ICONS.cocktail;
+    if (/bira|beer/.test(key)) return CATEGORY_ICONS.beer;
+    if (/kadeh|rocks|glass/.test(key)) return CATEGORY_ICONS.rocks;
+    if (/şişe|sise|bottle|spirit/.test(key)) return CATEGORY_ICONS.spirit;
+    if (/shot|şot/.test(key)) return CATEGORY_ICONS.shot;
+    if (/şarap|sarap|wine/.test(key)) return CATEGORY_ICONS.wine;
+    if (/alkols|non-alc|soft|meşrubat|mesrubat/.test(key)) return CATEGORY_ICONS.nonalcoholic;
+    if (/tavuk|chicken/.test(key)) return CATEGORY_ICONS.chicken;
+    if (/et yemek|meat|biftek|kavurma/.test(key)) return CATEGORY_ICONS.meat;
+    if (/makarna|pasta|salata|salad/.test(key)) return CATEGORY_ICONS.pasta;
+    if (/meze/.test(key)) return CATEGORY_ICONS.meze;
+    if (/çerez|cerez|nuts|kuruyemiş/.test(key)) return CATEGORY_ICONS.nuts;
+    if (/aperatif|atıştır|atistir|bite|snack/.test(key)) return CATEGORY_ICONS.fries;
+    if (/yemek|food|burger|main/.test(key)) return CATEGORY_ICONS.food;
+    return CATEGORY_ICONS.leaf;
+  }
+
+  function ivyDividerSVG(){
+    return '<svg viewBox="0 0 110 14" xmlns="http://www.w3.org/2000/svg"><path d="M0 7 H45" stroke="#4a3a2a" stroke-width="1"/><path d="M65 7 H110" stroke="#4a3a2a" stroke-width="1"/></svg>';
+  }
+
+  function renderContent(){
+    els.content.innerHTML = "";
+    state.data.categories.forEach(function(cat, catIdx){
+      var section = el("section", "category");
+      section.id = "cat-" + cat.id;
+
+      var bgIcon = el("div", "cat-bg-icon");
+      bgIcon.innerHTML = getCategoryIcon(cat);
+      section.appendChild(bgIcon);
+
+      var head = el("div", "cat-head");
+      if (state.editing){
+        head.appendChild(editField(cat, "name_tr", "Kategori adı (TR)"));
+        head.appendChild(editField(cat, "name_en", "Category name (EN)"));
+        var delCat = el("div", "item-del", "✕ Kategoriyi sil");
+        delCat.style.display = "block";
+        delCat.style.marginTop = "6px";
+        delCat.style.cursor = "pointer";
+        delCat.addEventListener("click", function(){
+          if (delCat.dataset.confirm === "1"){
+            state.data.categories.splice(catIdx,1);
+            render();
+          } else {
+            delCat.dataset.confirm = "1";
+            delCat.textContent = "Emin misiniz? Tekrar tıklayın";
+          }
+        });
+        head.appendChild(delCat);
+      } else {
+        var h2 = el("h2", "", state.lang === "tr" ? cat.name_tr : cat.name_en);
+        head.appendChild(h2);
+      }
+      section.appendChild(head);
+
+      var divider = el("div", "ivy-divider");
+      divider.innerHTML = ivyDividerSVG() + '<span class="diamond"></span>' + ivyDividerSVG();
+      section.appendChild(divider);
+
+      cat.items.forEach(function(item, itemIdx){
+        section.appendChild(renderItem(item, cat, catIdx, itemIdx));
+      });
+
+      if (!state.editing && (cat.note_tr || cat.note_en)){
+        var note = state.lang === "tr" ? cat.note_tr : cat.note_en;
+        if (note) section.appendChild(el("div", "cat-note", note));
+      }
+      if (state.editing){
+        var noteRow = el("div"); noteRow.style.display="flex"; noteRow.style.gap="6px"; noteRow.style.flexWrap="wrap"; noteRow.style.marginTop="10px";
+        noteRow.appendChild(editField(cat, "note_tr", "Kategori notu (TR, opsiyonel)"));
+        noteRow.appendChild(editField(cat, "note_en", "Category note (EN, optional)"));
+        section.appendChild(noteRow);
+
+        var addHeadBtn = el("div", "add-item-btn", "+ Alt başlık ekle");
+        addHeadBtn.style.display = "block";
+        addHeadBtn.addEventListener("click", function(){
+          cat.items.push({ isHeading:true, name_tr:"", name_en:"" });
+          render();
+        });
+        section.appendChild(addHeadBtn);
+      }
+
+      if (state.editing){
+        var addItemBtn = el("div", "add-item-btn", "+ Ürün ekle");
+        addItemBtn.style.display = "block";
+        addItemBtn.addEventListener("click", function(){
+          cat.items.push({ name_tr:"", name_en:"", desc_tr:"", desc_en:"", price:"" });
+          render();
+        });
+        section.appendChild(addItemBtn);
+      }
+
+      els.content.appendChild(section);
+    });
+
+    if (state.editing){
+      var addCatWrap = el("div", "add-cat-btn", "+ Yeni kategori ekle");
+      addCatWrap.style.display = "block";
+      addCatWrap.style.margin = "20px 20px 0";
+      addCatWrap.addEventListener("click", function(){
+        var name = "Yeni Kategori";
+        state.data.categories.push({ id: slugify(name) + "-" + Date.now(), name_tr:"", name_en:"", items: [] });
+        render();
+      });
+      els.content.appendChild(addCatWrap);
+    }
+  }
+
+  function editField(obj, key, placeholder){
+    var input = el("input");
+    input.type = "text";
+    input.placeholder = placeholder;
+    input.value = obj[key] || "";
+    input.style.cssText = "width:100%;max-width:280px;background:var(--panel);border:1px solid var(--line);color:var(--cream);font-family:var(--sans);font-size:13px;padding:6px 8px;border-radius:6px;margin:3px 0;";
+    input.addEventListener("input", function(){ obj[key] = input.value; });
+    return input;
+  }
+
+  function renderItem(item, cat, catIdx, itemIdx){
+    var wrap = el("div", item.isHeading ? "item-heading" : "item");
+
+    if (state.editing){
+      if (item.isHeading){
+        var hcol = el("div", "item-main");
+        var hrow = el("div"); hrow.style.display="flex"; hrow.style.gap="6px"; hrow.style.alignItems="center"; hrow.style.flexWrap="wrap";
+        hrow.appendChild(editField(item, "name_tr", "Alt başlık (TR)"));
+        hrow.appendChild(editField(item, "name_en", "Subheading (EN)"));
+        var hdel = el("span", "item-del", "✕ Sil");
+        hdel.style.display = "inline-block";
+        hdel.addEventListener("click", function(){ cat.items.splice(itemIdx,1); render(); });
+        hrow.appendChild(hdel);
+        hcol.appendChild(hrow);
+        wrap.appendChild(hcol);
+        wrap.className = "item";
+        return wrap;
+      }
+      var col = el("div", "item-main");
+      var row1 = el("div"); row1.style.display="flex"; row1.style.gap="6px"; row1.style.flexWrap="wrap";
+      row1.appendChild(editField(item, "name_tr", "Ürün adı (TR)"));
+      row1.appendChild(editField(item, "name_en", "Product name (EN)"));
+      col.appendChild(row1);
+
+      var row2 = el("div"); row2.style.display="flex"; row2.style.gap="6px"; row2.style.flexWrap="wrap";
+      row2.appendChild(editField(item, "desc_tr", "Açıklama (TR, opsiyonel)"));
+      row2.appendChild(editField(item, "desc_en", "Description (EN, optional)"));
+      col.appendChild(row2);
+
+      var row3 = el("div"); row3.style.display="flex"; row3.style.gap="6px"; row3.style.alignItems="center"; row3.style.marginTop="2px";
+      var priceInput = editField(item, "price", "Fiyat");
+      priceInput.style.maxWidth = "90px";
+      row3.appendChild(priceInput);
+      var tagInput = editField(item, "tag_tr", "Etiket TR (ops. örn. İmza)");
+      tagInput.style.maxWidth = "150px";
+      row3.appendChild(tagInput);
+      var tagInputEn = editField(item, "tag_en", "Tag EN (opt.)");
+      tagInputEn.style.maxWidth = "150px";
+      row3.appendChild(tagInputEn);
+
+      var del = el("span", "item-del", "✕ Sil");
+      del.style.display = "inline-block";
+      del.addEventListener("click", function(){
+        cat.items.splice(itemIdx, 1);
+        render();
+      });
+      row3.appendChild(del);
+      col.appendChild(row3);
+
+      wrap.appendChild(col);
+      return wrap;
+    }
+
+    // display mode
+    if (item.isHeading){
+      wrap.textContent = state.lang === "tr" ? item.name_tr : item.name_en;
+      return wrap;
+    }
+    var main = el("div", "item-main");
+    var top = el("div", "item-row-top");
+    var name = state.lang === "tr" ? item.name_tr : item.name_en;
+    var nameEl = el("span", "item-name", name || "");
+    var tag = state.lang === "tr" ? item.tag_tr : item.tag_en;
+    if (tag) {
+      var tagEl = el("span", "tag", tag);
+      nameEl.appendChild(tagEl);
+    }
+    top.appendChild(nameEl);
+    var lead = el("span", "item-lead");
+    top.appendChild(lead);
+    var price = el("span", "item-price", item.price ? (item.price + " ₺") : "");
+    top.appendChild(price);
+    main.appendChild(top);
+
+    var desc = state.lang === "tr" ? item.desc_tr : item.desc_en;
+    if (desc) main.appendChild(el("div", "item-desc", desc));
+
+    wrap.appendChild(main);
+    return wrap;
+  }
+
+  // ---- events ----
+  els.btnTr.addEventListener("click", function(){
+    state.lang = "tr";
+    els.btnTr.classList.add("active"); els.btnEn.classList.remove("active");
+    render();
+  });
+  els.btnEn.addEventListener("click", function(){
+    state.lang = "en";
+    els.btnEn.classList.add("active"); els.btnTr.classList.remove("active");
+    render();
+  });
+
+  els.gearBtn.addEventListener("click", function(){
+    if (state.editing) return;
+    els.pwModal.classList.add("show");
+    els.pwInput.value = "";
+    els.pwInput.style.borderColor = "";
+    setTimeout(function(){ els.pwInput.focus(); }, 50);
+  });
+  els.pwCancel.addEventListener("click", function(){
+    els.pwModal.classList.remove("show");
+  });
+  els.pwOk.addEventListener("click", tryUnlock);
+  els.pwInput.addEventListener("keydown", function(e){ if (e.key === "Enter") tryUnlock(); });
+
+  function tryUnlock(){
+    if (els.pwInput.value === EDIT_PASSWORD){
+      state.editing = true;
+      els.pwModal.classList.remove("show");
+      render();
+    } else {
+      els.pwInput.style.borderColor = "#d97757";
+      els.pwInput.value = "";
+      els.pwInput.placeholder = "Yanlış şifre, tekrar deneyin";
+    }
+  }
+
+  els.exitEditBtn.addEventListener("click", function(){
+    state.editing = false;
+    render();
+  });
+
+  els.addCatBtn.addEventListener("click", function(){
+    state.data.categories.push({ id: "cat-" + Date.now(), name_tr:"", name_en:"", items: [] });
+    render();
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  });
+
+  els.saveBtn.addEventListener("click", function(){
+    var original = els.saveBtn.textContent;
+    els.saveBtn.textContent = "Kaydediliyor...";
+    saveMenu(function(ok){
+      els.saveBtn.textContent = ok ? "Kaydedildi ✓" : "Hata, tekrar deneyin";
+      setTimeout(function(){ els.saveBtn.textContent = original; }, 1600);
+    });
+  });
+
+  loadMenu();
+})();
+
+</script>
+</body>
+</html>
