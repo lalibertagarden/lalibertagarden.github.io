@@ -2906,11 +2906,13 @@ window.DEFAULT_MENU = {
   // ---- events ----
   els.btnTr.addEventListener("click", function(){
     state.lang = "tr";
+    document.documentElement.lang = "tr";
     els.btnTr.classList.add("active"); els.btnEn.classList.remove("active");
     render();
   });
   els.btnEn.addEventListener("click", function(){
     state.lang = "en";
+    document.documentElement.lang = "en";
     els.btnEn.classList.add("active"); els.btnTr.classList.remove("active");
     render();
   });
