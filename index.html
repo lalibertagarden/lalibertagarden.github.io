@@ -272,6 +272,20 @@
   }
   .theme-reset:hover{ color:var(--gold-bright); border-color:var(--gold);}
 
+  .github-panel{ margin-top:14px;}
+  .github-note{ font-family:var(--sans); font-size:11px; color:var(--cream-dim); line-height:1.5; margin-bottom:12px; opacity:0.85;}
+  .github-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .github-field{ display:flex; flex-direction:column; gap:4px;}
+  .github-field label{ font-family:var(--sans); font-size:10.5px; color:var(--cream-dim); text-transform:uppercase; letter-spacing:0.06em;}
+  .github-field input{
+    width:100%; padding:8px 10px; border-radius:7px; border:1px solid var(--line);
+    background:var(--bg); color:var(--cream); font-family:var(--sans); font-size:12.5px;
+  }
+  .github-status{ font-family:var(--sans); font-size:11.5px; color:var(--gold-bright); margin-top:10px; min-height:14px;}
+  @media (max-width:480px){
+    .github-grid{ grid-template-columns:1fr;}
+  }
+
   @media (max-width:420px){
     .logo-img{ width:140px; height:140px;}
     .cat-head h2{ font-size:29px;}
@@ -2372,6 +2386,7 @@ window.DEFAULT_MENU = {
 (function(){
   var STORAGE_KEY = "la-liberta-menu-v1";
   var THEME_KEY = "la-liberta-theme-v1";
+  var GITHUB_CONFIG_KEY = "la-liberta-github-config";
   var EDIT_PASSWORD = "izmirkoykasari35";
 
   var DEFAULT_THEME = { bg: "#17130f", cream: "#ece1c9", gold: "#cf9a43", ivy: "#6b8354" };
@@ -2381,7 +2396,8 @@ window.DEFAULT_MENU = {
     editing: false,
     data: null,
     theme: null,
-    backup: null
+    backup: null,
+    github: { owner:"", repo:"", path:"index.html", token:"" }
   };
 
   var els = {
@@ -2478,6 +2494,89 @@ window.DEFAULT_MENU = {
     window.storage.set(THEME_KEY, JSON.stringify(state.theme), true).then(function(res){
       if (cb) cb(!!res);
     }).catch(function(){ if(cb) cb(false); });
+  }
+
+  // ---- GitHub publishing ----
+  function loadGithubConfig(){
+    try {
+      var raw = localStorage.getItem(GITHUB_CONFIG_KEY);
+      if (raw) return Object.assign({ owner:"", repo:"", path:"index.html", token:"" }, JSON.parse(raw));
+    } catch(e){}
+    return { owner:"", repo:"", path:"index.html", token:"" };
+  }
+
+  function saveGithubConfig(){
+    try { localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify(state.github)); } catch(e){}
+  }
+
+  function utf8ToBase64(str){
+    var bytes = new TextEncoder().encode(str);
+    var binary = "";
+    var chunk = 0x8000;
+    for (var i=0; i<bytes.length; i+=chunk){
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i+chunk));
+    }
+    return btoa(binary);
+  }
+
+  function base64ToUtf8(b64){
+    var binary = atob(b64.replace(/\n/g, ""));
+    var bytes = new Uint8Array(binary.length);
+    for (var i=0; i<binary.length; i++){ bytes[i] = binary.charCodeAt(i); }
+    return new TextDecoder().decode(bytes);
+  }
+
+  function publishToGitHub(){
+    var cfg = state.github;
+    if (!cfg.owner || !cfg.repo || !cfg.token){
+      return Promise.resolve({ ok:false, message:"GitHub ayarları eksik" });
+    }
+    var path = cfg.path || "index.html";
+    var api = "https://api.github.com/repos/" + cfg.owner + "/" + cfg.repo + "/contents/" + path + "?ref=main";
+    var headers = {
+      "Authorization": "Bearer " + cfg.token,
+      "Accept": "application/vnd.github+json"
+    };
+    return fetch(api, { headers: headers }).then(function(getRes){
+      if (!getRes.ok){
+        return getRes.json().catch(function(){return {};}).then(function(errData){
+          throw new Error("Dosya okunamadı (" + getRes.status + ") " + (errData.message||""));
+        });
+      }
+      return getRes.json();
+    }).then(function(getData){
+      var currentText = base64ToUtf8(getData.content);
+
+      var menuJson = "window.DEFAULT_MENU = " + JSON.stringify(state.data, null, 2) + ";";
+      var newText = currentText.replace(/window\.DEFAULT_MENU = \{[\s\S]*?\n\};/, function(){ return menuJson; });
+
+      var themeJson = "var DEFAULT_THEME = " + JSON.stringify(state.theme) + ";";
+      newText = newText.replace(/var DEFAULT_THEME = \{[^}]*\};/, function(){ return themeJson; });
+
+      if (newText === currentText){
+        throw new Error("İçerik dosyada bulunamadı, yapı değişmiş olabilir");
+      }
+
+      return fetch(api.split("?")[0], {
+        method: "PUT",
+        headers: Object.assign({ "Content-Type": "application/json" }, headers),
+        body: JSON.stringify({
+          message: "Menü güncellendi - " + new Date().toLocaleString("tr-TR"),
+          content: utf8ToBase64(newText),
+          sha: getData.sha,
+          branch: "main"
+        })
+      }).then(function(putRes){
+        if (!putRes.ok){
+          return putRes.json().catch(function(){return {};}).then(function(errData){
+            throw new Error("Yayınlanamadı (" + putRes.status + ") " + (errData.message||""));
+          });
+        }
+        return { ok:true, message:"GitHub'a başarıyla yayınlandı" };
+      });
+    }).catch(function(err){
+      return { ok:false, message: err.message || "Bağlantı hatası" };
+    });
   }
 
   function loadMenu(){
@@ -2722,10 +2821,51 @@ window.DEFAULT_MENU = {
     return panel;
   }
 
+  function renderGithubPanel(){
+    var panel = el("div", "theme-panel github-panel");
+    var title = el("div", "theme-panel-title", "GitHub Yayınlama");
+    panel.appendChild(title);
+
+    var note = el("div", "github-note", "Bu ayarlar sadece bu cihazda/tarayıcıda saklanır. \"Kaydet\" butonuna bastığında menü doğrudan GitHub reposuna yayınlanır.");
+    panel.appendChild(note);
+
+    function textField(key, labelTr, placeholder, isPassword){
+      var wrap = el("div", "github-field");
+      var lab = el("label", "", labelTr);
+      var input = el("input");
+      input.type = isPassword ? "password" : "text";
+      input.placeholder = placeholder || "";
+      input.value = state.github[key] || "";
+      input.autocomplete = "off";
+      input.spellcheck = false;
+      input.addEventListener("input", function(){
+        state.github[key] = input.value.trim();
+        saveGithubConfig();
+      });
+      wrap.appendChild(lab);
+      wrap.appendChild(input);
+      return wrap;
+    }
+
+    var grid = el("div", "github-grid");
+    grid.appendChild(textField("owner", "Kullanıcı Adı", "örn. lalibertagarden"));
+    grid.appendChild(textField("repo", "Repo Adı", "örn. lalibertagarden.github.io"));
+    grid.appendChild(textField("path", "Dosya Yolu", "index.html"));
+    grid.appendChild(textField("token", "GitHub Token", "ghp_... veya github_pat_...", true));
+    panel.appendChild(grid);
+
+    var status = el("div", "github-status", "");
+    status.id = "githubStatus";
+    panel.appendChild(status);
+
+    return panel;
+  }
+
   function renderContent(){
     els.content.innerHTML = "";
     if (state.editing){
       els.content.appendChild(renderThemePanel());
+      els.content.appendChild(renderGithubPanel());
     }
     state.data.categories.forEach(function(cat, catIdx){
       var section = el("section", "category");
@@ -2980,17 +3120,30 @@ window.DEFAULT_MENU = {
   els.saveBtn.addEventListener("click", function(){
     var original = els.saveBtn.textContent;
     els.saveBtn.textContent = "Kaydediliyor...";
+    var statusEl = document.getElementById("githubStatus");
     saveMenu(function(ok){
       saveTheme(function(ok2){
         if (ok && ok2){
           state.backup = { data: JSON.parse(JSON.stringify(state.data)), theme: JSON.parse(JSON.stringify(state.theme)) };
         }
-        els.saveBtn.textContent = (ok && ok2) ? "Kaydedildi ✓" : "Hata, tekrar deneyin";
-        setTimeout(function(){ els.saveBtn.textContent = original; }, 1600);
+        var hasGithub = state.github && state.github.owner && state.github.repo && state.github.token;
+        if (hasGithub){
+          els.saveBtn.textContent = "GitHub'a yayınlanıyor...";
+          publishToGitHub().then(function(res){
+            els.saveBtn.textContent = res.ok ? "Yayınlandı ✓" : "Hata ✕";
+            if (statusEl) statusEl.textContent = res.message;
+            setTimeout(function(){ els.saveBtn.textContent = original; }, 2400);
+          });
+        } else {
+          els.saveBtn.textContent = (ok && ok2) ? "Kaydedildi ✓" : "Hata, tekrar deneyin";
+          if (statusEl) statusEl.textContent = "GitHub bilgileri girilmedi, sadece önizlemede kaydedildi.";
+          setTimeout(function(){ els.saveBtn.textContent = original; }, 1800);
+        }
       });
     });
   });
 
+  state.github = loadGithubConfig();
   loadTheme(loadMenu);
 })();
 
