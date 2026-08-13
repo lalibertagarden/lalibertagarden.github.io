@@ -2397,7 +2397,7 @@ window.DEFAULT_MENU = {
     data: null,
     theme: null,
     backup: null,
-    github: { owner:"", repo:"", path:"index.html", token:"" }
+    github: { owner:"lalibertagarden", repo:"lalibertagarden.github.io", path:"index.html", token:"" }
   };
 
   var els = {
@@ -2498,11 +2498,19 @@ window.DEFAULT_MENU = {
 
   // ---- GitHub publishing ----
   function loadGithubConfig(){
+    var defaults = { owner:"lalibertagarden", repo:"lalibertagarden.github.io", path:"index.html", token:"" };
     try {
       var raw = localStorage.getItem(GITHUB_CONFIG_KEY);
-      if (raw) return Object.assign({ owner:"", repo:"", path:"index.html", token:"" }, JSON.parse(raw));
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        var merged = Object.assign({}, defaults, parsed);
+        if (!merged.owner) merged.owner = defaults.owner;
+        if (!merged.repo) merged.repo = defaults.repo;
+        if (!merged.path) merged.path = defaults.path;
+        return merged;
+      }
     } catch(e){}
-    return { owner:"", repo:"", path:"index.html", token:"" };
+    return defaults;
   }
 
   function saveGithubConfig(){
