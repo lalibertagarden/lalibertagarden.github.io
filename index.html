@@ -361,7 +361,7 @@ window.DEFAULT_MENU = {
       "items": [
         {
           "isHeading": true,
-          "name_tr": "Kovalarrrrrr",
+          "name_tr": "Kovalar",
           "name_en": "Buckets"
         },
         {
@@ -2389,7 +2389,7 @@ window.DEFAULT_MENU = {
   var GITHUB_CONFIG_KEY = "la-liberta-github-config";
   var EDIT_PASSWORD = "izmirkoykasari35";
 
-  var DEFAULT_THEME = {"bg":"#17130f","cream":"#ece1c9","gold":"#cf9a43","ivy":"#6b8354"};
+  var DEFAULT_THEME = { bg: "#17130f", cream: "#ece1c9", gold: "#cf9a43", ivy: "#6b8354" };
 
   var state = {
     lang: "tr",
@@ -2507,6 +2507,7 @@ window.DEFAULT_MENU = {
         if (!merged.owner) merged.owner = defaults.owner;
         if (!merged.repo) merged.repo = defaults.repo;
         if (!merged.path) merged.path = defaults.path;
+        merged.token = ""; // token is never remembered between sessions, for security
         return merged;
       }
     } catch(e){}
@@ -2514,7 +2515,10 @@ window.DEFAULT_MENU = {
   }
 
   function saveGithubConfig(){
-    try { localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify(state.github)); } catch(e){}
+    // token is intentionally excluded - only remember owner/repo/path, never persist the secret token
+    try {
+      localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify({ owner: state.github.owner, repo: state.github.repo, path: state.github.path }));
+    } catch(e){}
   }
 
   function utf8ToBase64(str){
