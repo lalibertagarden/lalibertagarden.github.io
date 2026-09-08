@@ -2387,9 +2387,22 @@ window.DEFAULT_MENU = {
   var STORAGE_KEY = "la-liberta-menu-v1";
   var THEME_KEY = "la-liberta-theme-v1";
   var GITHUB_CONFIG_KEY = "la-liberta-github-config";
-  var EDIT_PASSWORD = "izmirkoykasari35";
+  var EDIT_PASSWORD_HASH = "f1c95b75ca7a51a87ede7e782db324b2fc753a75e73fc64b58ddc68a8c3647b4";
 
-  var DEFAULT_THEME = {"bg":"#17130f","cream":"#ece1c9","gold":"#cf9a43","ivy":"#6b8354"};
+  function sha256Hex(text){
+    var enc = new TextEncoder().encode(text);
+    return crypto.subtle.digest("SHA-256", enc).then(function(buf){
+      var bytes = new Uint8Array(buf);
+      var hex = "";
+      for (var i=0; i<bytes.length; i++){
+        var h = bytes[i].toString(16);
+        hex += h.length === 1 ? "0" + h : h;
+      }
+      return hex;
+    });
+  }
+
+  var DEFAULT_THEME = { bg: "#17130f", cream: "#ece1c9", gold: "#cf9a43", ivy: "#6b8354" };
 
   var state = {
     lang: "tr",
@@ -3083,16 +3096,25 @@ window.DEFAULT_MENU = {
   els.pwInput.addEventListener("keydown", function(e){ if (e.key === "Enter") tryUnlock(); });
 
   function tryUnlock(){
-    if (els.pwInput.value === EDIT_PASSWORD){
-      state.backup = { data: JSON.parse(JSON.stringify(state.data)), theme: JSON.parse(JSON.stringify(state.theme)) };
-      state.editing = true;
-      els.pwModal.classList.remove("show");
-      render();
-    } else {
+    var typed = els.pwInput.value;
+    els.pwOk.disabled = true;
+    sha256Hex(typed).then(function(hash){
+      els.pwOk.disabled = false;
+      if (hash === EDIT_PASSWORD_HASH){
+        state.backup = { data: JSON.parse(JSON.stringify(state.data)), theme: JSON.parse(JSON.stringify(state.theme)) };
+        state.editing = true;
+        els.pwModal.classList.remove("show");
+        render();
+      } else {
+        els.pwInput.style.borderColor = "#d97757";
+        els.pwInput.value = "";
+        els.pwInput.placeholder = "Yanlış şifre, tekrar deneyin";
+      }
+    }).catch(function(){
+      els.pwOk.disabled = false;
       els.pwInput.style.borderColor = "#d97757";
-      els.pwInput.value = "";
-      els.pwInput.placeholder = "Yanlış şifre, tekrar deneyin";
-    }
+      els.pwInput.placeholder = "Bir hata oluştu, tekrar deneyin";
+    });
   }
 
   els.exitEditBtn.addEventListener("click", function(){
